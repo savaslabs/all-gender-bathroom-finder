@@ -14,6 +14,7 @@ export function Register({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [error, setError] = useState('');
   const Auth = useContext(AuthContext);
 
   const handleSignUp = () => {
@@ -21,9 +22,20 @@ export function Register({ navigation }) {
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
         if (res.user) Auth.setLoggedIn(true);
+        const user = Firebase.auth().currentUser;
+        user
+          .sendEmailVerification()
+          .then(function () {
+            console.log('it sent')
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         navigation.navigate('Profile');
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   return (
@@ -51,6 +63,7 @@ export function Register({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+      <Text>{error}</Text>
     </View>
   );
 }

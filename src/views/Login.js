@@ -14,7 +14,19 @@ import {
 export function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const Auth = useContext(AuthContext);
+
+  const resetPassword = () => {
+    Firebase.auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setMessage('Password reset email has been sent.');
+      })
+      .catch((err) => {
+        setMessage(err.message);
+      });
+  };
 
   const handleLogin = () => {
     Firebase.auth()
@@ -45,12 +57,14 @@ export function Login({ navigation }) {
         secureTextEntry={true}
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
       <Button
         title="Don't have an account yet? Sign up"
         onPress={() => navigation.navigate('Register')}
       />
+      <Button title="Forgot password?" onPress={resetPassword} />
+      <Text>{message}</Text>
     </View>
   );
 }
