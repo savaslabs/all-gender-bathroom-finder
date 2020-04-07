@@ -1,13 +1,21 @@
-import React from '../../../node_modules/react';
+import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Welcome to our bathroom finder.</Text>
       <Button
         title="Go to Results"
         onPress={() => navigation.navigate('Results')}
+      />
+      <Button
+        title="Register"
+        onPress={() => navigation.navigate('Register')}
+      />
+      <Button
+        title="Login"
+        onPress={() => navigation.navigate('Login')}
       />
     </View>
   );

@@ -1,19 +1,19 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Home } from './src/views/home/Home';
-import { Results } from './src/views/results/Results';
+import React, { useState, setState } from 'react';
+import { Home } from './src/views/Home';
+import { Results } from './src/views/Results';
+import SwitchNavigator from './src/navigation/SwitchNavigator';
+// import * as firebase from 'firebase';
+//import firebaseConfig from './firebase';
 
-const Stack = createStackNavigator();
+export const AuthContext = React.createContext(null);
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = useState(false)
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Results" component={Results} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
+      <SwitchNavigator />
+    </AuthContext.Provider>
   );
 }
 

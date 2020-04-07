@@ -1,4 +1,4 @@
-import React from '../../../node_modules/react';
+import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export function Results({ navigation }) {
