@@ -3,6 +3,7 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Register from '../views/Register'
 import Login from '../views/Login';
 import Profile from '../views/Profile';
+import ForgotPassword from '../views/ForgotPassword';
 
 const SwitchNavigator = createSwitchNavigator(
     {
@@ -14,6 +15,9 @@ const SwitchNavigator = createSwitchNavigator(
         },
         Profile: {
             screen: Profile
+        },
+        ForgotPassword: {
+          screen: ForgotPassword
         }
     },
     {
