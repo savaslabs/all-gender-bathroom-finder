@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Firebase from '../../firebase';
-import { AuthContext } from '../../App';
-
+// import { AuthContext } from '../context/AutContext';
+import LoginForm from '../components/auth/LoginForm';
 import {
   View,
   TextInput,
@@ -12,59 +12,14 @@ import {
 } from 'react-native';
 
 export function Login({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const Auth = useContext(AuthContext);
-
-  const resetPassword = () => {
-    Firebase.auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        setMessage('Password reset email has been sent.');
-      })
-      .catch((err) => {
-        setMessage(err.message);
-      });
-  };
-
-  const handleLogin = () => {
-    Firebase.auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        if (res.user) {
-          Auth.setLoggedIn(true);
-          navigation.navigate('Profile');
-        }
-      })
-      .catch((error) => console.log(error));
-  };
-
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.inputBox}
-        value={email}
-        onChangeText={(email) => setEmail(email)}
-        placeholder="Email"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.inputBox}
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-        placeholder="Password"
-        secureTextEntry={true}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Log In</Text>
-      </TouchableOpacity>
+      <LoginForm />
       <Button
         title="Don't have an account yet? Sign up"
         onPress={() => navigation.navigate('Register')}
       />
-      <Button title="Forgot password?" onPress={resetPassword} />
-      <Text>{message}</Text>
+      <Button title="Forgot password?" onPress={() => navigation.navigate('ForgotPassword')} />
     </View>
   );
 }
