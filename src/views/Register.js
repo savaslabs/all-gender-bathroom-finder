@@ -1,69 +1,16 @@
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../App';
-import Firebase from '../../firebase';
+import { AuthContext } from '../context/AutContext';
+import RegisterForm from '../components/auth/RegisterForm';
 
 import {
   View,
-  TextInput,
   StyleSheet,
-  TouchableOpacity,
-  Text,
 } from 'react-native';
 
 export function Register({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [error, setError] = useState('');
-  const Auth = useContext(AuthContext);
-
-  const handleSignUp = () => {
-    Firebase.auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        if (res.user) Auth.setLoggedIn(true);
-        const user = Firebase.auth().currentUser;
-        user
-          .sendEmailVerification()
-          .then(function () {
-            console.log('it sent')
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        navigation.navigate('Profile');
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
-  };
-
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.inputBox}
-        value={name}
-        onChangeText={(name) => setName(name)}
-        placeholder="Full Name"
-      />
-      <TextInput
-        style={styles.inputBox}
-        value={email}
-        onChangeText={(email) => setEmail(email)}
-        placeholder="Email"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.inputBox}
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-        placeholder="Password"
-        secureTextEntry={true}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-      <Text>{error}</Text>
+      <RegisterForm />
     </View>
   );
 }
