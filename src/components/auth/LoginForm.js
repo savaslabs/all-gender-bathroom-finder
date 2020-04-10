@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { withNavigation } from 'react-navigation';
-import Firebase from '../../../firebase';
-import { AuthContext } from '../../context/AutContext';
+import { Firebase, GoogleAuthProvider } from '../../../firebase';
+import { AuthContext } from '../../context/AuthContext';
 import { Email, Password } from './Input';
 
 import { View, StyleSheet, Text, Button } from 'react-native';
@@ -10,6 +10,18 @@ export function LoginForm({ navigation: { navigate } }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const Auth = useContext(AuthContext);
+
+  const GoogleSignIn = () => {
+    Firebase.auth()
+      .signInWithPopup(GoogleAuthProvider)
+      .then((result) => {
+        Auth.setLoggedIn(true);
+        navigate('Profile');
+      })
+      .catch((err) => {
+        Auth.setError(err.message);
+      });
+  };
 
   const handleLogin = () => {
     Firebase.auth()
@@ -20,7 +32,21 @@ export function LoginForm({ navigation: { navigate } }) {
           navigate('Profile');
         }
       })
-      .catch((err) => Auth.setError(err.message));
+      .catch((err) => {
+        if (err.code === 'auth/wrong-password') {
+          Firebase.auth()
+            .fetchSignInMethodsForEmail(email)
+            .then((methods) => {
+              if (methods[0] === 'google.com') {
+                Auth.setError('Please log in using Google.');
+              } else {
+                Auth.setError(err.message);
+              }
+            });
+        } else {
+          Auth.setError(err.message);
+        }
+      });
   };
 
   return (
@@ -41,6 +67,7 @@ export function LoginForm({ navigation: { navigate } }) {
         />
       </View>
       <Button title="Log In" onPress={handleLogin} />
+      <Button title="Sign in with Google" onPress={GoogleSignIn} />
       <Text>{Auth.error}</Text>
     </View>
   );

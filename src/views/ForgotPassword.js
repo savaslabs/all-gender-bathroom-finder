@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import Firebase from '../../firebase';
+import { Firebase } from '../../firebase';
 import { Email } from '../components/auth/Input';
-import { AuthContext } from '../context/AutContext';
+import { AuthContext } from '../context/AuthContext';
 
 import { View, StyleSheet, Text, Button } from 'react-native';
 

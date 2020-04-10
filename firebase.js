@@ -21,6 +21,5 @@ const firebaseConfig = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-const Firebase = firebase.initializeApp(firebaseConfig);
-
-export default Firebase;
+export const Firebase = firebase.initializeApp(firebaseConfig);
+export const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();

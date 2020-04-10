@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { Firebase } from '../../firebase';
+import { AuthContext } from '../context/AuthContext';
 
-export default function Profile() {
+export default function Profile({ navigation: { navigate } }) {
+  const Auth = useContext(AuthContext);
+
+  const signOut = () => {
+    Firebase.auth()
+      .signOut()
+      .then(() => {
+        Auth.setLoggedIn(false)
+        navigate('Home')
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <View style={styles.container}>
       <Text>This is a profile screen.</Text>
+      <Button title="sign out" onPress={signOut} />
     </View>
   );
 }
