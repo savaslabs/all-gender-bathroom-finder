@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { withNavigation } from 'react-navigation';
-import Firebase  from '../../../firebase';
-import { AuthContext } from '../../context/AutContext';
+import { Firebase, GoogleAuthProvider } from '../../../firebase';
+import { AuthContext } from '../../context/AuthContext';
 import { Email, NewPassword, VerifyPassword } from './Input';
 
 import { View, StyleSheet, Text, Button, TextInput } from 'react-native';
@@ -20,6 +20,27 @@ export function RegisterForm({ navigation: { navigate } }) {
     }
   };
 
+  const GoogleSignIn = () => {
+    Firebase.auth()
+      .signInWithPopup(GoogleAuthProvider)
+      .then((result) => {
+        const user = result.additionalUserInfo;
+
+        if (!user.isNewUser) {
+          Auth.setMessage(
+            'Account with that email address already exists, please log in.'
+          );
+          navigate('Login');
+        } else {
+          Auth.setLoggedIn(true);
+          navigate('Profile');
+        }
+      })
+      .catch(err => {
+        Auth.setError(err.message)
+      });
+  };
+
   const handleSignUp = () => {
     Firebase.auth()
       .createUserWithEmailAndPassword(email, password)
@@ -29,6 +50,7 @@ export function RegisterForm({ navigation: { navigate } }) {
         user
           .sendEmailVerification()
           .then(() => {
+            Auth.setLoggedIn(true);
             navigate('Profile');
           })
           .catch((err) => {
@@ -72,6 +94,7 @@ export function RegisterForm({ navigation: { navigate } }) {
         />
       </View>
       <Button title="Register" onPress={handleSignUp} />
+      <Button title="Register with Google" onPress={GoogleSignIn} />
       <Text>{Auth.error}</Text>
     </View>
   );

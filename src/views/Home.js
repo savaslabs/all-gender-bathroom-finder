@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import { Firebase } from '../../firebase';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
 
-export function Home({ navigation }) {
+export function Home({ navigation: { navigate } }) {
+  const Auth = useContext(AuthContext);
+
+  useEffect(() => {
+    Firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        Auth.setLoggedIn(true)
+        navigate('Profile')
+      }
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Welcome to our bathroom finder.</Text>
       <Button
         title="Go to Results"
-        onPress={() => navigation.navigate('Results')}
+        onPress={() => navigate('Results')}
       />
       <Button
         title="Register"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigate('Register')}
       />
-      <Button
-        title="Login"
-        onPress={() => navigation.navigate('Login')}
-      />
+      <Button title="Login" onPress={() => navigate('Login')} />
     </View>
   );
 }

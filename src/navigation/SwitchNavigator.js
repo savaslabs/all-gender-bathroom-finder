@@ -1,5 +1,6 @@
 import React from 'react'
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import Home from '../views/Home';
 import Register from '../views/Register'
 import Login from '../views/Login';
 import Profile from '../views/Profile';
@@ -7,6 +8,9 @@ import ForgotPassword from '../views/ForgotPassword';
 
 const SwitchNavigator = createSwitchNavigator(
     {
+        Home: {
+          screen: Home
+        },
         Login: {
             screen: Login
         },
@@ -21,7 +25,7 @@ const SwitchNavigator = createSwitchNavigator(
         }
     },
     {
-        initialRouteName: 'Login'
+        initialRouteName: 'Home'
     }
 )
 

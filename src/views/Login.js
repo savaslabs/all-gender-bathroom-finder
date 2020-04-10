@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import Firebase from '../../firebase';
+import { Firebase } from '../../firebase';
 // import { AuthContext } from '../context/AutContext';
 import LoginForm from '../components/auth/LoginForm';
 import {
