@@ -4,7 +4,9 @@ import Home from '../views/Home';
 import Register from '../views/Register'
 import Login from '../views/Login';
 import Profile from '../views/Profile';
+import Results from '../views/Results';
 import ForgotPassword from '../views/ForgotPassword';
+import AddNew from '../views/AddNew';
 
 const SwitchNavigator = createSwitchNavigator(
     {
@@ -22,6 +24,12 @@ const SwitchNavigator = createSwitchNavigator(
         },
         ForgotPassword: {
           screen: ForgotPassword
+        },
+        Results: {
+          screen: Results
+        },
+        AddNew: {
+          screen: AddNew
         }
     },
     {

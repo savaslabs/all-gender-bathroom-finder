@@ -7,7 +7,7 @@ export const Email = (props) => (
   <TextInput
     accessibilityLabel="email"
     autoCapitalize="none"
-    textContentType={'email'}
+    textContentType={'emailAddress'}
     onChangeText={props.onChangeText}
     placeholder={'Email'}
     style={props.style}

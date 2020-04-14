@@ -21,6 +21,7 @@ export default function Profile({ navigation: { navigate } }) {
     <View style={styles.container}>
       <Text>This is a profile screen.</Text>
       <Button title="sign out" onPress={signOut} />
+      <Button title="Add a location" onPress={() => navigate('AddNew')} />
     </View>
   );
 }

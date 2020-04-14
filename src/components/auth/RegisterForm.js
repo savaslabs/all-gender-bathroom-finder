@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { withNavigation } from 'react-navigation';
-import { Firebase, GoogleAuthProvider } from '../../../firebase';
+import { Firebase } from '../../../firebase';
 import { AuthContext } from '../../context/AuthContext';
 import { Email, NewPassword, VerifyPassword } from './Input';
 
@@ -18,27 +18,6 @@ export function RegisterForm({ navigation: { navigate } }) {
     } else {
       Auth.setError('');
     }
-  };
-
-  const GoogleSignIn = () => {
-    Firebase.auth()
-      .signInWithPopup(GoogleAuthProvider)
-      .then((result) => {
-        const user = result.additionalUserInfo;
-
-        if (!user.isNewUser) {
-          Auth.setMessage(
-            'Account with that email address already exists, please log in.'
-          );
-          navigate('Login');
-        } else {
-          Auth.setLoggedIn(true);
-          navigate('Profile');
-        }
-      })
-      .catch(err => {
-        Auth.setError(err.message)
-      });
   };
 
   const handleSignUp = () => {
@@ -94,7 +73,6 @@ export function RegisterForm({ navigation: { navigate } }) {
         />
       </View>
       <Button title="Register" onPress={handleSignUp} />
-      <Button title="Register with Google" onPress={GoogleSignIn} />
       <Text>{Auth.error}</Text>
     </View>
   );
@@ -108,13 +86,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputBox: {
-    width: '85%',
-    margin: 10,
+    width: 275,
+    margin: 15,
     padding: 15,
     fontSize: 16,
     borderColor: '#d3d3d3',
     borderBottomWidth: 1,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   button: {
     marginTop: 30,
