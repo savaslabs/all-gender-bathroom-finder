@@ -1,3 +1,12 @@
+/**
+ * @file
+ *
+ * Firebase configuration.
+ *
+ * Config, init, other firestore variables.
+ *
+ */
+
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 

@@ -1,11 +1,20 @@
+/**
+ * @file WORK IN PROGRESS/INCOMPLETE
+ *
+ * Results screen.
+ *
+ * Ideally will search for locations using Places
+ * API and cross-reference with our bathrooms
+ * collection. Users should then be able to choose
+ * between a map view or list view.
+ *
+ */
+
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MapInput from '../components/results/MapInput';
-import ResultsMapView from '../components/results/MapView';
-import { GOOGLE_API_KEY } from 'react-native-dotenv';
 import {
   getLocation,
-  geocodeLocationByName,
 } from '../services/location-service';
 
 export function Results({ navigation }) {

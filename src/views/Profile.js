@@ -1,3 +1,12 @@
+/**
+ * @file
+ *
+ * Profile screen.
+ *
+ * Profile screen to be fleshed out in future.
+ *
+ */
+
 import React, { useContext } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Firebase } from '../../firebase';

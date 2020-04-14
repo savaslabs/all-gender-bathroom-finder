@@ -1,3 +1,24 @@
+/**
+ * @file WORK IN-PROGRESS
+ *
+ * @todo
+ * - Break down into smaller components
+ * - Move logic either into component or firebase files.
+ * - Conditional display for the Picker
+ * - Handle success/error on posting to Firebase.
+ *
+ * Add new location page.
+ *
+ * User can use the autocomplete input to search for a
+ * location. We take that result (along with user
+ * supplied information) to create a new document in our
+ * Firebase db.
+ *
+ * Firestore read/write data documentation:
+ * https://firebase.google.com/docs/firestore/query-data/get-data
+ *
+ */
+
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, Picker, Switch } from 'react-native';
 import { db } from '../../firebase';
@@ -15,17 +36,6 @@ export default function AddNew({ navigation: { navigate } }) {
   const [bathroomTypes, setBathroomTypes] = useState([]);
   const [placeId, setPlaceId] = useState('');
 
-  /* @TODO: Don't immediately set the location in Firebase.
-     Take the place information, then take other information
-     from the user form that doesn't exist yet to actually post
-     to Firestore.
-
-     1. Create state variables for place information.
-     2. After person selects a place, provide feedback with
-     place information asking if it's correct.
-     3. Add form items asking about type of bathroom, if it is
-     accessible, and if it has a changing table.
-  */
   const createLocationFromGooglePlace = (place) => {
     const {
       place_id,

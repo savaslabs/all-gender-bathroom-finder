@@ -1,3 +1,13 @@
+/**
+ * @file WORK IN-PROGRESS
+ *
+ * Location logic for use by MapView component.
+ *
+ * Tutorial for reference:
+ * https://medium.com/@Mdmoin07/react-native-maps-with-autocomplete-e9c71e493974
+ *
+ */
+
 import Geocoder from 'react-native-geocoding';
 
 export const getLocation = () => {

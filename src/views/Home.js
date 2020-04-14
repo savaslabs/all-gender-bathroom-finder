@@ -1,3 +1,15 @@
+/**
+ * @file
+ *
+ * @todo some kind of loading component
+ *
+ * Home screen.
+ *
+ * Landing page for app. Redirects to profile when
+ * logged in and provides links to various screens.
+ *
+ */
+
 import React, { useEffect, useContext } from 'react';
 import { Firebase } from '../../firebase';
 import { Button, StyleSheet, Text, View } from 'react-native';

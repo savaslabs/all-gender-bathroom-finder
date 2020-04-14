@@ -1,3 +1,15 @@
+/**
+ * @file WORK IN-PROGRESS
+ *
+ * Native map display.
+ *
+ * Renders map using Expo's MapView.
+ *
+ * MapView documentation:
+ * https://docs.expo.io/versions/latest/sdk/map-view/
+ *
+ */
+
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, Dimensions } from 'react-native';

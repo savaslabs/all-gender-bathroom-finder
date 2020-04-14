@@ -1,3 +1,17 @@
+/**
+ * @file
+ *
+ * Register Form.
+ *
+ * Renders registration TextInputs, creates user, and
+ * authenticates through Firebase.
+ *
+ * Firebase auth documentation:
+ * https://firebase.google.com/docs/auth/web/password-auth
+ * https://firebase.google.com/docs/auth/web/manage-users#send_a_user_a_verification_email
+ *
+ */
+
 import React, { useState, useContext } from 'react';
 import { withNavigation } from 'react-navigation';
 import { Firebase } from '../../../firebase';

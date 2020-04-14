@@ -1,3 +1,14 @@
+/**
+ * @file
+ *
+ * Forgot password screen.
+ *
+ * Allows user to send reset password email.
+ *
+ * Firebase documentation:
+ * https://firebase.google.com/docs/reference/js/firebase.auth.Auth#send-password-reset-email
+ */
+
 import React, { useState, useContext } from 'react';
 import { Firebase } from '../../firebase';
 import { Email } from '../components/auth/Input';

@@ -1,13 +1,18 @@
-import React, { useState, useContext } from 'react';
-import { Firebase } from '../../firebase';
-// import { AuthContext } from '../context/AutContext';
+/**
+ * @file
+ *
+ * Login screen.
+ *
+ * Renders login form, links to registration and
+ * forgot password screens.
+ *
+ */
+
+import React from 'react';
 import LoginForm from '../components/auth/LoginForm';
 import {
   View,
-  TextInput,
   StyleSheet,
-  TouchableOpacity,
-  Text,
   Button,
 } from 'react-native';
 

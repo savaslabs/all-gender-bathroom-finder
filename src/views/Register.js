@@ -1,16 +1,34 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+/**
+ * @file
+ *
+ * Register screen.
+ *
+ * Renders registration form, links to login and
+ * forgot password screens.
+ *
+ */
+
+import React from 'react';
 import RegisterForm from '../components/auth/RegisterForm';
 
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 
 export function Register({ navigation }) {
   return (
     <View style={styles.container}>
       <RegisterForm />
+      <Button
+        title="Already have an account? Sign in."
+        onPress={() => navigation.navigate('Login')}
+      />
+      <Button
+        title="Forgot password?"
+        onPress={() => navigation.navigate('ForgotPassword')}
+      />
+       <Button
+        title="Go back"
+        onPress={() => navigation.navigate('Home')}
+      />
     </View>
   );
 }

@@ -1,3 +1,15 @@
+/**
+ * @file
+ *
+ * Login Form.
+ *
+ * Renders login TextInputs and authenticates through Firebase.
+ *
+ * Firebase auth documentation:
+ * https://firebase.google.com/docs/auth/web/password-auth
+ *
+ */
+
 import React, { useState, useContext } from 'react';
 import { withNavigation } from 'react-navigation';
 import { Firebase } from '../../../firebase';

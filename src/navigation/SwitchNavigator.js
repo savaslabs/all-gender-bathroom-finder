@@ -1,3 +1,16 @@
+/**
+ * @file
+ *
+ * Navigation.
+ *
+ * Sets up switch navigation throughout site.
+ *
+ * SwitchNavigator documentation:
+ * https://reactnavigation.org/docs/1.x/switch-navigator/
+ *
+ */
+
+
 import React from 'react'
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Home from '../views/Home';
