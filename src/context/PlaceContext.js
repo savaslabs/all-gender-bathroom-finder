@@ -27,6 +27,7 @@ export const PlaceProvider = (props) => {
   const [bathroomTypes, setBathroomTypes] = useState([]);
   const [placeId, setPlaceId] = useState('');
   const [inputVal, setInputVal] = useState('');
+  const [preview, setPreview] = useState('');
 
   const createLocationFromGooglePlace = (place) => {
     const {
@@ -49,6 +50,17 @@ export const PlaceProvider = (props) => {
     });
   };
 
+  const resetPlace = () => {
+    setNewPlace({
+      bathroom_type: null,
+      accessible: false,
+      changing_table: false,
+    });
+    setPlaceId('');
+    setInputVal('');
+    setPreview('');
+  }
+
   return (
     <PlaceContext.Provider
       value={{
@@ -60,7 +72,10 @@ export const PlaceProvider = (props) => {
         setPlaceId,
         createLocationFromGooglePlace,
         inputVal,
-        setInputVal
+        setInputVal,
+        preview,
+        setPreview,
+        resetPlace
       }}
     >
       {props.children}

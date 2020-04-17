@@ -42,6 +42,7 @@ const PlacesAutocompleteInput = (props) => {
       }
       queryFields={props.queryFields}
       queryTypes={props.queryTypes}
+      requiredTimeBeforeSearch={500}
       stylesContainer={{
         position: 'relative',
         alignSelf: 'stretch',
@@ -64,7 +65,7 @@ const PlacesAutocompleteInput = (props) => {
         left: -1,
         right: -1,
       }}
-    ></PlacesInput>
+    />
   );
 };
 

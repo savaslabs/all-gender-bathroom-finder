@@ -14,114 +14,72 @@
  * supplied information) to create a new document in our
  * Firebase db.
  *
- * Firestore read/write data documentation:
- * https://firebase.google.com/docs/firestore/query-data/get-data
- *
  */
 
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, Picker, Switch } from 'react-native';
-import { db } from '../../firebase';
+import React, { useContext, useEffect } from 'react';
+import { Button, Text, View, Picker, Switch } from 'react-native';
+import PlacesAutocompleteInput from '../components/search/PlacesAutocompleteInput';
 import { AuthContext } from '../context/AuthContext';
+import { PlaceContext } from '../context/PlaceContext';
+import {
+  getBathroomTypes,
+  setLocationInFirestore,
+} from '../services/firestore-service';
 
-import MapInput from '../components/results/MapInput';
+import PlacePreview from '../components/add/PlacePreview';
+import BathroomTypePicker from '../components/add/BathroomTypePicker';
 
 export default function AddNew({ navigation: { navigate } }) {
   const Auth = useContext(AuthContext);
-  const [newPlace, setNewPlace] = useState({
-    bathroom_type: null,
-    accessible: false,
-    changing_table: false
-  });
-  const [bathroomTypes, setBathroomTypes] = useState([]);
-  const [placeId, setPlaceId] = useState('');
-
-  const createLocationFromGooglePlace = (place) => {
-    const {
-      place_id,
-      name,
-      formatted_address,
-      formatted_phone_number,
-      website,
-      types,
-    } = place.result;
-
-
-    setPlaceId(place_id)
-    setNewPlace({
-      ...newPlace,
-      name,
-      formatted_address,
-      formatted_phone_number,
-      website,
-      types,
-    });
-  };
-
-  const getBathroomTypeOptions = () => {
-    let typesArr = [];
-    db.collection('types')
-      .get()
-      .then((res) => {
-        res.forEach((type) => {
-          typesArr = [...typesArr, type]
-        });
-        setBathroomTypes(typesArr);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const setLocationInFirebase = () => {
-    const bathroomDoc = db.collection('bathrooms').doc(placeId);
-
-    bathroomDoc
-      .set(newPlace)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
+  const Place = useContext(PlaceContext);
 
   useEffect(() => {
-    getBathroomTypeOptions();
-  }, [])
+    getBathroomTypes().then((bathroomList) => {
+      Place.setBathroomTypes(bathroomList);
+    });
+  }, []);
+
+  const onPlaceSelect = (place) => {
+    Place.setPreview(`${place.result.name}\n${place.result.vicinity}`);
+    Place.createLocationFromGooglePlace(place);
+  };
+
+  const handleSubmit = () => {
+    setLocationInFirestore(Place.placeId, Place.newPlace);
+    Place.resetPlace();
+    navigate('AddSuccess');
+  };
 
   return (
     <View style={{ marginTop: 50 }}>
       {Auth.isLoggedIn ? (
         <View>
-          <MapInput
-            handleSelection={(place) => createLocationFromGooglePlace(place)}
-          />
-          <Text style={{ marginTop: 150 }}>
-            If this is right, provided us with some more details.{'\n'}
-            {newPlace.name}
-            {'\n'}
-            {newPlace.formatted_address}
-            {'\n'}
-            {newPlace.formatted_phone_number}
-          </Text>
-          <Text>Select a bathroom type.</Text>
-          <Picker
-            selectedValue={newPlace.bathroom_type}
-            style={{ width: '100%' }}
-            onValueChange={(itemValue, itemIndex) =>
-              setNewPlace({
-                ...newPlace,
-                bathroom_type: itemValue,
-              })
+          <PlacesAutocompleteInput
+            handleSelection={(place) => onPlaceSelect(place)}
+            queryFields={
+              'place_id,name,vicinity,formatted_address,formatted_phone_number,types,website'
             }
-          >
-            {bathroomTypes.map((type, index) => {
-              return <Picker.Item key={index} label={type.data().label} value={type.id} />
-            })}
-
-          </Picker>
+            queryTypes={'establishment'}
+          />
+          <PlacePreview />
+          <Text>What type of bathroom is at this location?</Text>
+          <BathroomTypePicker />
           <Text>Is this bathroom accessible?</Text>
-          <Switch value={newPlace.accessible} onValueChange={value => setNewPlace({...newPlace, accessible: value})}></Switch>
+          <Switch
+            value={Place.newPlace.accessible}
+            onValueChange={(value) =>
+              Place.setNewPlace({ ...Place.newPlace, accessible: value })
+            }
+          ></Switch>
           <Text>Does this bathroom have a changing table available?</Text>
-          <Switch value={newPlace.changing_table} onValueChange={value => setNewPlace({...newPlace, changing_table: value})}></Switch>
-          <Button title="Add Location" onPress={() => setLocationInFirebase()} />
+          <Switch
+            value={Place.newPlace.changing_table}
+            onValueChange={(value) =>
+              Place.setNewPlace({ ...Place.newPlace, changing_table: value })
+            }
+          ></Switch>
+          <Button title="Add Location" onPress={() => handleSubmit()} />
+          <Button title="Start over" onPress={() => Place.resetPlace()} />
         </View>
       ) : (
         <Text>
@@ -136,12 +94,3 @@ export default function AddNew({ navigation: { navigate } }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
