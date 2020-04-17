@@ -12,7 +12,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapInput from '../components/results/MapInput';
+// import MapInput from '../components/results/MapInput';
 import {
   getLocation,
 } from '../services/location-service';
@@ -51,7 +51,7 @@ export function Results({ navigation }) {
 
   return (
     <View style={{ flex: 1, marginTop: 50}} keyboardShouldPersistTaps={"always"}>
-      <MapInput />
+
     </View>
   );
 }
