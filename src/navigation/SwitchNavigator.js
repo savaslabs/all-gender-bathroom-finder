@@ -20,6 +20,7 @@ import Profile from '../views/Profile';
 import Results from '../views/Results';
 import ForgotPassword from '../views/ForgotPassword';
 import AddNew from '../views/AddNew';
+import AddSuccess from '../views/AddSuccess';
 
 const SwitchNavigator = createSwitchNavigator(
     {
@@ -43,6 +44,9 @@ const SwitchNavigator = createSwitchNavigator(
         },
         AddNew: {
           screen: AddNew
+        },
+        AddSuccess: {
+          screen: AddSuccess
         }
     },
     {
