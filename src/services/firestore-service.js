@@ -42,3 +42,23 @@ export const setLocationInFirestore = (placeId, newPlace) => {
       .catch((err) => reject(err));
   });
 };
+
+export const updateBathroom = (placeId, newData) => {
+  return new Promise((resolve, reject) => {
+    const bathroomDoc = db.collection('bathrooms').doc(placeId);
+    bathroomDoc
+      .update(newData)
+      .then(resolve('Location successfully updated.'))
+      .catch((err) => reject(err));
+  });
+};
+
+export const deleteBathroom = (placeId) => {
+  return new Promise((resolve, reject) => {
+    const bathroomDoc = db.collection('bathrooms').doc(placeId);
+    bathroomDoc
+      .delete()
+      .then(resolve('Location successfully deleted.'))
+      .catch((err) => reject(err));
+  });
+};
